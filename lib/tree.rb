@@ -23,7 +23,7 @@ class Tree
     end
   end
 
-  # FIX_ME: This method appears to work, but it sometimes returns nil and sometimes returns the new node.
+  # FIX_ME: Returns nil and not the node when node is not the newest highest value.
   def insert(value, node = @root, parent_node = nil)
     if node.nil?
       parent_node.left = Node.new(value) if value < parent_node.data
@@ -36,7 +36,19 @@ class Tree
     end
   end
 
-  def delete(value)
+  def delete(value, node = @root, parent_node = nil)
+    if node.data == value
+      # Delete the node
+      # Conditionals...
+      # if there are no children nodes of node (node is leaf)
+      # if there is one child
+      # if there are two childs
+    else
+      return nil if node.nil?
+
+      delete(value, node.left, node) if value < node.data
+      delete(value, node.right, node) if value > node.data
+    end
   end
 
   def find(value, node = @root)
