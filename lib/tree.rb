@@ -23,7 +23,17 @@ class Tree
     end
   end
 
-  def insert(value)
+  # FIX_ME: This method appears to work, but it sometimes returns nil and sometimes returns the new node.
+  def insert(value, node = @root, parent_node = nil)
+    if node.nil?
+      parent_node.left = Node.new(value) if value < parent_node.data
+      parent_node.right = Node.new(value) if value > parent_node.data
+    else
+      return nil if value == node.data
+
+      insert(value, node.left, node) if value < node.data
+      insert(value, node.right, node) if value > node.data
+    end
   end
 
   def delete(value)
