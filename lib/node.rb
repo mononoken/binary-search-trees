@@ -6,6 +6,9 @@ class Node
   attr_accessor :data, :left, :right
 
   def <=>(other)
+    # CHECK_THIS guard clause carefully. Does it interfere with any tree methods?
+    return nil if other.nil?
+
     data <=> other.data
   end
 
@@ -20,12 +23,9 @@ class Node
   end
 
   def childs
-    if leaf?
-      0
-    elsif @left.nil? || @right.nil?
-      1
-    else
-      2
-    end
+    child_array = []
+    child_array.push(@left) unless @left.nil?
+    child_array.push(@right) unless @right.nil?
+    child_array
   end
 end
