@@ -23,6 +23,23 @@ class Tree
     end
   end
 
+  def insert(value)
+  end
+
+  def delete(value)
+  end
+
+  def find(value, node = @root)
+    return "'#{value}' not found in list." if node.nil?
+
+    if value == node.data
+      node
+    else
+      find(value, node.left) if value < node.data
+      find(value, node.right) if value > node.data
+    end
+  end
+
   # Print a visualization of tree (from TOP student).
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
