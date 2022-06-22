@@ -18,4 +18,14 @@ class Node
   def leaf?
     @left.nil? && @right.nil?
   end
+
+  def childs
+    if leaf?
+      0
+    elsif @left.nil? || @right.nil?
+      1
+    else
+      2
+    end
+  end
 end
