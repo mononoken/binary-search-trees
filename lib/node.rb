@@ -18,14 +18,14 @@ class Node
     @right = right
   end
 
-  def leaf?
-    @left.nil? && @right.nil?
-  end
-
   def childs
     child_array = []
     child_array.push(@left) unless @left.nil?
     child_array.push(@right) unless @right.nil?
     child_array
+  end
+
+  def leaf?
+    childs.empty?
   end
 end
