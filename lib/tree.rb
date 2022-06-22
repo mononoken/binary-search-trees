@@ -43,6 +43,16 @@ class Tree
       # if there are no children nodes of node (node is leaf)
       # if there is one child
       # if there are two childs
+      case node.childs.count
+      when 0
+        parent_node.left = nil if parent_node.left == node
+        parent_node.right = nil if parent_node.right == node
+      when 1
+        parent_node.left = node.childs[0] if parent_node.left == node
+        parent_node.right = node.childs[0] if parent_node.right == node
+      when 2
+        # FINISH
+      end
     else
       return nil if node.nil?
 
