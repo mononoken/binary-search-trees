@@ -38,11 +38,6 @@ class Tree
 
   def delete(value, node = @root, parent_node = nil)
     if node.data == value
-      # Delete the node
-      # Conditionals...
-      # if there are no children nodes of node (node is leaf)
-      # if there is one child
-      # if there are two childs
       case node.childs.count
       when 0
         parent_node.left = nil if parent_node.left == node
@@ -51,13 +46,33 @@ class Tree
         parent_node.left = node.childs[0] if parent_node.left == node
         parent_node.right = node.childs[0] if parent_node.right == node
       when 2
-        # FINISH
+        next_biggest_node = find_next_biggest(node)
+        # DON'T PANIC
+        node.data = next_biggest_node.data
+
       end
     else
       return nil if node.nil?
 
       delete(value, node.left, node) if value < node.data
       delete(value, node.right, node) if value > node.data
+    end
+  end
+
+  def find_next_biggest(root = @root)
+    next_node = root.right
+    next_node = next_node.left until next_node.left.nil?
+    next_node
+  end
+
+  def find_parent(value, node = @root, parent_node = nil)
+    return "'#{value}' not found in list." if node.nil?
+
+    if value == node.data
+      parent_node
+    else
+      find(value, node.left) if value < node.data
+      find(value, node.right) if value > node.data
     end
   end
 
