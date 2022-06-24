@@ -82,8 +82,9 @@ class Tree
     if value == node.data
       node
     else
-      find(value, node.left) if value < node.data
-      find(value, node.right) if value > node.data
+      found = find(value, node.left) if value < node.data
+      found = find(value, node.right) if value > node.data
+      found
     end
   end
 
