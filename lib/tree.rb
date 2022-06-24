@@ -31,8 +31,12 @@ class Tree
     else
       return nil if value == node.data
 
-      insert(value, node.left, node) if value < node.data
-      insert(value, node.right, node) if value > node.data
+      inserted = insert(value, node.left, node) if value < node.data
+      inserted = insert(value, node.right, node) if value > node.data
+      # DON'T PANIC
+      # Looks like method traverses right fist when inserting to the left. This may be causing the nil issue.
+      puts "value: #{value} node: #{node} node.data: #{node.data}"
+      inserted
     end
   end
 
@@ -59,23 +63,6 @@ class Tree
     end
   end
 
-  def find_next_biggest(root = @root)
-    next_node = root.right
-    next_node = next_node.left until next_node.left.nil?
-    next_node
-  end
-
-  def find_parent(value, node = @root, parent_node = nil)
-    return "'#{value}' not found in list." if node.nil?
-
-    if value == node.data
-      parent_node
-    else
-      find(value, node.left) if value < node.data
-      find(value, node.right) if value > node.data
-    end
-  end
-
   def find(value, node = @root)
     return "'#{value}' not found in list." if node.nil?
 
@@ -86,6 +73,25 @@ class Tree
       found = find(value, node.right) if value > node.data
       found
     end
+  end
+
+  def find_parent(value, node = @root, parent_node = nil)
+    return "'#{value}' not found in list." if node.nil?
+
+    if value == node.data
+      parent_node
+    else
+      found = find_parent(value, node.left, node) if value < node.data
+      found = find_parent(value, node.right, node) if value > node.data
+      found
+    end
+  end
+
+  # Should this return node or data?
+  def find_next_biggest(root = @root)
+    next_node = root.right
+    next_node = next_node.left until next_node.left.nil?
+    next_node
   end
 
   # Print a visualization of tree (from TOP student).
