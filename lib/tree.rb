@@ -99,25 +99,33 @@ class Tree
     queue = []
     queue.push(pointer)
 
-    level_order_array = []
+    level_order_values = []
 
     until queue.empty?
       pointer = queue.shift
-      level_order_array.push(pointer.data) unless pointer.nil?
+      level_order_values.push(pointer.data) unless pointer.nil?
 
       yield pointer if block_given?
 
       queue.push(pointer.left) unless pointer.left.nil?
       queue.push(pointer.right) unless pointer.right.nil?
     end
-    level_order_array unless block_given?
+    level_order_values
   end
 
-  def level_order_recursion(node = @root)
-    if node.nil?
-      return #something
+  # Method yields to block only once
+  def level_order_recursion(pointer = @root, queue = [pointer], level_order_values = [])
+    if queue.empty?
+      level_order_values
     else
-      nil
+      pointer = queue.shift
+      yield pointer if block_given?
+      
+      level_order_values.push(pointer.data) unless pointer.nil?
+
+      queue.push(pointer.left) unless pointer.left.nil?
+      queue.push(pointer.right) unless pointer.right.nil?
+      level_order_recursion(pointer, queue, level_order_values)
     end
   end
 
