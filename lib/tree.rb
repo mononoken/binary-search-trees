@@ -94,6 +94,33 @@ class Tree
     next_node
   end
 
+  def level_order
+    pointer = @root
+    queue = []
+    queue.push(pointer)
+
+    level_order_array = []
+
+    until queue.empty?
+      pointer = queue.shift
+      level_order_array.push(pointer.data) unless pointer.nil?
+
+      yield pointer if block_given?
+
+      queue.push(pointer.left) unless pointer.left.nil?
+      queue.push(pointer.right) unless pointer.right.nil?
+    end
+    level_order_array unless block_given?
+  end
+
+  def level_order_recursion(node = @root)
+    if node.nil?
+      return #something
+    else
+      nil
+    end
+  end
+
   # Print a visualization of tree (from TOP student).
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
