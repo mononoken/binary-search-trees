@@ -51,9 +51,10 @@ class Tree
         parent_node.right = node.childs[0] if parent_node.right == node
       when 2
         next_biggest_node = find_next_biggest(node)
-        # DON'T PANIC
+        parent_next_biggest_node = find_parent(next_biggest_node.data)
         node.data = next_biggest_node.data
-
+        parent_next_biggest_node.left = nil if parent_next_biggest_node.left == next_biggest_node
+        parent_next_biggest_node.right = nil if parent_next_biggest_node.right == next_biggest_node
       end
     else
       return nil if node.nil?
@@ -87,7 +88,6 @@ class Tree
     end
   end
 
-  # Should this return node or data?
   def find_next_biggest(root = @root)
     next_node = root.right
     next_node = next_node.left until next_node.left.nil?
