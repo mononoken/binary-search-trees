@@ -147,7 +147,19 @@ class Tree
   end
 
   # left root right
-  def inorder(pointer = @root)
+  def inorder(pointer = @root, inorder_list = [], &block)
+    if pointer.nil?
+      nil
+    else
+      inorder(pointer.left, inorder_list, &block)
+
+      block.call pointer if block_given?
+      inorder_list.push(pointer.data)
+
+      inorder(pointer.right, inorder_list, &block)
+
+      inorder_list
+    end
   end
 
   # left right root
