@@ -163,7 +163,17 @@ class Tree
   end
 
   # left right root
-  def postorder
+  def postorder(pointer = @root, postorder_list = [], &block)
+    if pointer.nil?
+      nil
+    else
+      postorder(pointer.left, postorder_list, &block)
+      postorder(pointer.right, postorder_list, &block)
+
+      block.call pointer if block_given?
+      postorder_list.push(pointer.data)
+      postorder_list
+    end
   end
 
   # Print a visualization of tree (from TOP student).
