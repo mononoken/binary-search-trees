@@ -129,6 +129,31 @@ class Tree
     end
   end
 
+  # root left right
+  def inorder(pointer = @root)
+    stack = [pointer]
+    inorder_list = []
+
+    loop do
+      yield pointer = stack.pop
+      stack.push(pointer.right) unless pointer.right.nil?
+      stack.push(pointer.left) unless pointer.left.nil?
+
+      inorder_list.push(pointer.data)
+
+      break if stack.empty?
+    end
+    inorder_list
+  end
+
+  # left root right
+  def preorder
+  end
+
+  # left right root
+  def postorder
+  end
+
   # Print a visualization of tree (from TOP student).
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
