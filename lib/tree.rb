@@ -130,7 +130,7 @@ class Tree
   end
 
   # root left right
-  def inorder(pointer = @root)
+  def preorder(pointer = @root)
     stack = [pointer]
     inorder_list = []
 
@@ -147,7 +147,20 @@ class Tree
   end
 
   # left root right
-  def preorder
+  def inorder
+    stack = [pointer]
+    preorder_list = []
+
+    loop do
+      yield pointer = stack.pop
+      stack.push(pointer.right) unless pointer.right.nil?
+      stack.push(pointer.left) unless pointer.left.nil?
+
+      preorder_list.push(pointer.data)
+
+      break if stack.empty?
+    end
+    preorder_list
   end
 
   # left right root
