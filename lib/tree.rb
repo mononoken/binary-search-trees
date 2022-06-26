@@ -64,14 +64,14 @@ class Tree
     end
   end
 
-  def find(value, node = @root)
-    return "'#{value}' not found in list." if node.nil?
+  def find(value, pointer = @root)
+    return "'#{value}' not found in list." if pointer.nil?
 
-    if value == node.data
-      node
+    if value == pointer.data
+      pointer
     else
-      found = find(value, node.left) if value < node.data
-      found = find(value, node.right) if value > node.data
+      found = find(value, pointer.left) if value < pointer.data
+      found = find(value, pointer.right) if value > pointer.data
       found
     end
   end
@@ -147,8 +147,7 @@ class Tree
   end
 
   # left root right
-  def inorder
-
+  def inorder(pointer = @root)
   end
 
   # left right root
