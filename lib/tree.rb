@@ -113,19 +113,19 @@ class Tree
     level_order_values
   end
 
-  # Method yields to block only once
-  def level_order_recursion(pointer = @root, queue = [pointer], level_order_values = [])
+  def level_order_recursive(pointer = @root, queue = [pointer], level_order_values = [], &block)
     if queue.empty?
       level_order_values
     else
       pointer = queue.shift
-      yield pointer if block_given?
+      block.call(pointer) if block_given?
       
-      level_order_values.push(pointer.data) unless pointer.nil?
+      level_order_values.push(pointer.data)
 
       queue.push(pointer.left) unless pointer.left.nil?
       queue.push(pointer.right) unless pointer.right.nil?
-      level_order_recursion(pointer, queue, level_order_values)
+      level_order_recursive(pointer, queue, level_order_values, &block)
+      level_order_values
     end
   end
 
