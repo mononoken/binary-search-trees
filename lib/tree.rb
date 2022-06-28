@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative './node'
-require_relative './pointer'
 
 require 'pry-byebug'
 
@@ -28,25 +27,6 @@ class Tree
     end
   end
 
-  # FIX_ME: Returns nil and not the node when node is not the newest highest value.
-  # def insert(value, node = @root, parent_node = nil)
-  #   if node.nil?
-  #     parent_node.left = Node.new(value) if value < parent_node.data
-  #     parent_node.right = Node.new(value) if value > parent_node.data
-  #   else
-  #     return nil if value == node.data
-
-  #     inserted = insert(value, node.left, node) if value < node.data
-  #     inserted = insert(value, node.right, node) if value > node.data
-  #     # DON'T PANIC
-  #     # Looks like method traverses right fist when inserting to the left. This may be causing the nil issue.
-  #     puts "value: #{value} node: #{node} node.data: #{node.data}"
-  #     inserted
-  #   end
-  # end
-
-
-  # Removed Pointer. Is this object worth having?
   def insert(value, pointer = root)
     return nil if value == pointer.data
 
@@ -81,21 +61,7 @@ class Tree
     end
   end
 
-  def find(value, pointer = Pointer.new(self))
-    return "'#{value}' not found in list." if pointer.nil?
-
-    if value == pointer.data
-      pointer
-    else
-      found = find(value, pointer.left) if value < pointer.data
-      found = find(value, pointer.right) if value > pointer.data
-      found
-    end
-  end
-
-  # See how the methods traverse in binding pry
   def find(value, pointer = root)
-    binding.pry
     return "'#{value}' not found in list." if pointer.nil?
 
     if value == pointer.data
@@ -219,4 +185,4 @@ class Tree
 end
 
 test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-test.insert(10)
+test.find(1)
