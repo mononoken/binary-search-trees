@@ -82,6 +82,8 @@ class Tree
   end
 
   def find_next_biggest(pointer = @root)
+    return nil if pointer.right.nil?
+
     pointer = pointer.right
     pointer = pointer.left until pointer.left.nil?
     pointer
