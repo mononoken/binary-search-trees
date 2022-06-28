@@ -6,8 +6,6 @@ class Node
   attr_accessor :data, :left, :right
 
   def <=>(other)
-    # CHECK_THIS guard clause carefully. Does it interfere with any tree methods?
-    # return nil if other.nil?
     data <=> other.data
   end
 
