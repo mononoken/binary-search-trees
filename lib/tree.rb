@@ -6,25 +6,20 @@ require 'pry-byebug'
 
 # Build a binary search tree from an array.
 class Tree
-  attr_reader :root
+  attr_reader :array, :root
 
   def initialize(array)
-    @root = build_tree(array)
+    @array = array.uniq.sort
+    @root = build_tree(@array)
   end
 
-  # DON'T PANIC.
-  # Are these trees actually balanced? I think so, and the video is wrong... gm8DUJJhmY4
   def build_tree(array)
-    formatted_array = array.uniq.sort
+    return nil if array.empty?
 
-    if formatted_array.empty?
-      nil
-    else
-      root = Node.new(formatted_array[formatted_array.count / 2])
-      root.left = build_tree(formatted_array[0...formatted_array.count / 2])
-      root.right = build_tree(formatted_array[formatted_array.count / 2 + 1..formatted_array.count])
-      root
-    end
+    root = Node.new(array[array.count / 2])
+    root.left = build_tree(array[0...array.count / 2])
+    root.right = build_tree(array[array.count / 2 + 1..array.count])
+    root
   end
 
   def insert(value, pointer = root)
