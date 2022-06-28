@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './node'
+require_relative './pointer'
 
 # Build a binary search tree from an array.
 class Tree
@@ -66,7 +67,7 @@ class Tree
     end
   end
 
-  def find(value, pointer = @root)
+  def find(value, pointer = Pointer.new(self))
     return "'#{value}' not found in list." if pointer.nil?
 
     if value == pointer.data
@@ -84,9 +85,8 @@ class Tree
     if value == node.data
       parent_node
     else
-      found = find_parent(value, node.left, node) if value < node.data
-      found = find_parent(value, node.right, node) if value > node.data
-      found
+      find_parent(value, node.left, node) if value < node.data
+      find_parent(value, node.right, node) if value > node.data
     end
   end
 
@@ -176,6 +176,14 @@ class Tree
     end
   end
 
+  def height(node)
+    # return height
+  end
+
+  # Recognize that many methods involve traversing. Can I make this task a method?
+  def traverse
+  end
+
   # Print a visualization of tree (from TOP student).
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -183,3 +191,5 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 end
+
+test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
