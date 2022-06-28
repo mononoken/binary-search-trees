@@ -81,10 +81,10 @@ class Tree
     end
   end
 
-  def find_next_biggest(root = @root)
-    next_node = root.right
-    next_node = next_node.left until next_node.left.nil?
-    next_node
+  def find_next_biggest(pointer = @root)
+    pointer = pointer.right
+    pointer = pointer.left until pointer.left.nil?
+    pointer
   end
 
   def level_order
