@@ -71,14 +71,13 @@ class Tree
     end
   end
 
-  def find_parent(value, node = @root, parent_node = nil)
-    return "'#{value}' not found in list." if node.nil?
+  def find_parent(value, pointer = @root, parent = nil)
+    return "'#{value}' not found in list." if pointer.nil?
 
-    if value == node.data
-      parent_node
+    if value == pointer.data
+      parent
     else
-      find_parent(value, node.left, node) if value < node.data
-      find_parent(value, node.right, node) if value > node.data
+      value < pointer.data ? find_parent(value, pointer.left, pointer) : find_parent(value, pointer.right, pointer)
     end
   end
 
