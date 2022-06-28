@@ -10,6 +10,8 @@ class Tree
     @root = build_tree(array)
   end
 
+  # DON'T PANIC.
+  # Are these trees actually balanced? I think so, and the video is wrong... gm8DUJJhmY4
   def build_tree(array)
     formatted_array = array.uniq.sort
 
@@ -130,20 +132,18 @@ class Tree
   end
 
   # root left right
-  def preorder(pointer = @root)
-    stack = [pointer]
-    preorder_list = []
-
-    loop do
-      yield pointer = stack.pop
-      stack.push(pointer.right) unless pointer.right.nil?
-      stack.push(pointer.left) unless pointer.left.nil?
-
+  def preorder(pointer = @root, preorder_list = [], &block)
+    if pointer.nil?
+      nil
+    else
+      block.call pointer if block_given?
       preorder_list.push(pointer.data)
 
-      break if stack.empty?
+      preorder(pointer.left, preorder_list, &block)
+      preorder(pointer.right, preorder_list, &block)
+
+      preorder_list
     end
-    preorder_list
   end
 
   # left root right
