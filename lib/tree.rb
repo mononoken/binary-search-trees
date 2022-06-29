@@ -168,11 +168,10 @@ class Tree
     preorder(node).filter { |node| node.leaf? }
   end
 
-  def height(value)
-    return "'#{value}' not found in list." unless find(value).instance_of?(Node)
+  def height(node = root)
+    return "'#{node.data}' not found in list." unless find(node.data).instance_of?(Node)
 
-    pointer = find(value)
-    find_leafs(pointer).map { |leaf| depth(leaf.data, pointer)}.max
+    find_leafs(node).map { |leaf| depth(leaf.data, node)}.max
   end
 
   def depth(value, pointer = root, counter = 0)
