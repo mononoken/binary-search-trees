@@ -210,3 +210,26 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 end
+
+puts 'Initialize tree'
+test = Tree.new(Array.new(15) { rand(1..100) })
+test.pretty_print
+puts "Is balanced?: #{test.balanced?}"
+p test.preorder.map(&:data)
+p test.inorder.map(&:data)
+p test.postorder.map(&:data)
+
+puts 'Insert 8 nodes'
+8.times do
+  test.insert(rand(100..300))
+end
+test.pretty_print
+puts "Is balanced?: #{test.balanced?}"
+
+puts 'Rebalance tree'
+test.rebalance
+test.pretty_print
+puts "Is balanced?: #{test.balanced?}"
+p test.preorder.map(&:data)
+p test.inorder.map(&:data)
+p test.postorder.map(&:data)
