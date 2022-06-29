@@ -185,6 +185,24 @@ class Tree
     end
   end
 
+  def balanced?
+    preorder(root).all? do |node|
+      if node.left.nil? && node.right.nil?
+        true
+      elsif node.left.nil?
+        height(node.right) == 0
+      elsif node.right.nil?
+        height(node.left) == 0
+      else
+        height(node.left) - height(node.right) <= 1
+      end
+    end
+  end
+
+  # Tip: You’ll want to use a traversal method to provide a new array to the #build_tree method.
+  def rebalance
+  end
+
   # Print a visualization of tree (from TOP student).
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
