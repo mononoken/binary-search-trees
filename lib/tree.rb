@@ -164,40 +164,15 @@ class Tree
     end
   end
 
-  # Height is defined as the number of edges in longest path from a given node to a leaf node
-  def height(value, pointer = find(value), counter = 0)
-    return "'#{value}' not found in list." if pointer.nil?
-
-    if pointer.leaf?
-      counter
-    else
-      counter += 1
-      # Do I need to check every possible traversal to figure out the maximum height?
-      # value < pointer.data ? height(value, pointer.left, counter) : height(value, pointer.right, counter)
-    end
-  end
-
-  def find_paths(node)
-    paths = []
-
-  end
-
-  def find_path(node, paths)
-    if pointer.leaf?
-      paths.push(pointer)
-    else
-      # find all childs of pointer
-      # move down and find all childs
-      # continue until all leafs
-      # if leaf, push to paths
-      paths = pointer.childs
-      pointer = paths.pop
-      counter += 1
-    end
-  end
-
   def find_leafs(node)
     preorder(node).filter { |node| node.leaf? }
+  end
+
+  def height(value)
+    return "'#{value}' not found in list." unless find(value).instance_of?(Node)
+
+    pointer = find(value)
+    find_leafs(pointer).map { |leaf| depth(leaf.data, pointer)}.max
   end
 
   def depth(value, pointer = root, counter = 0)
