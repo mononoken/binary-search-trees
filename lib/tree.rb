@@ -169,19 +169,19 @@ class Tree
   end
 
   def height(node = root)
-    return "'#{node.data}' not found in list." unless find(node.data).instance_of?(Node)
+    return "'#{node}' not found in list." unless node.instance_of?(Node)
 
-    find_leafs(node).map { |leaf| depth(leaf.data, node)}.max
+    find_leafs(node).map { |leaf| depth(leaf, node)}.max
   end
 
-  def depth(value, pointer = root, counter = 0)
-    return "'#{value}' not found in list." if pointer.nil?
+  def depth(node, pointer = root, counter = 0)
+    return "'#{node.data}' not found in list." if pointer.nil?
 
-    if value == pointer.data
+    if node == pointer
       counter
     else
       counter += 1
-      value < pointer.data ? depth(value, pointer.left, counter) : depth(value, pointer.right, counter)
+      node < pointer ? depth(node, pointer.left, counter) : depth(node, pointer.right, counter)
     end
   end
 
