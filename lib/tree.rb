@@ -199,8 +199,8 @@ class Tree
     end
   end
 
-  # Tip: You’ll want to use a traversal method to provide a new array to the #build_tree method.
   def rebalance
+    @root = build_tree(inorder(root).map(&:data))
   end
 
   # Print a visualization of tree (from TOP student).
@@ -210,6 +210,3 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 end
-
-test = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-test.find(1)
