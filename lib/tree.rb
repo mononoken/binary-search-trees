@@ -125,7 +125,7 @@ class Tree
       nil
     else
       block.call pointer if block_given?
-      preorder_list.push(pointer.data)
+      preorder_list.push(pointer)
 
       preorder(pointer.left, preorder_list, &block)
       preorder(pointer.right, preorder_list, &block)
@@ -142,7 +142,7 @@ class Tree
       inorder(pointer.left, inorder_list, &block)
 
       block.call pointer if block_given?
-      inorder_list.push(pointer.data)
+      inorder_list.push(pointer)
 
       inorder(pointer.right, inorder_list, &block)
 
@@ -159,17 +159,56 @@ class Tree
       postorder(pointer.right, postorder_list, &block)
 
       block.call pointer if block_given?
-      postorder_list.push(pointer.data)
+      postorder_list.push(pointer)
       postorder_list
     end
   end
 
-  def height(node)
-    # return height
+  # Height is defined as the number of edges in longest path from a given node to a leaf node
+  def height(value, pointer = find(value), counter = 0)
+    return "'#{value}' not found in list." if pointer.nil?
+
+    if pointer.leaf?
+      counter
+    else
+      counter += 1
+      # Do I need to check every possible traversal to figure out the maximum height?
+      # value < pointer.data ? height(value, pointer.left, counter) : height(value, pointer.right, counter)
+    end
   end
 
-  # Recognize that many methods involve traversing. Can I make this task a method?
-  def traverse
+  def find_paths(node)
+    paths = []
+
+  end
+
+  def find_path(node, paths)
+    if pointer.leaf?
+      paths.push(pointer)
+    else
+      # find all childs of pointer
+      # move down and find all childs
+      # continue until all leafs
+      # if leaf, push to paths
+      paths = pointer.childs
+      pointer = paths.pop
+      counter += 1
+    end
+  end
+
+  def find_leafs(node)
+    preorder(node).filter { |node| node.leaf? }
+  end
+
+  def depth(value, pointer = root, counter = 0)
+    return "'#{value}' not found in list." if pointer.nil?
+
+    if value == pointer.data
+      counter
+    else
+      counter += 1
+      value < pointer.data ? depth(value, pointer.left, counter) : depth(value, pointer.right, counter)
+    end
   end
 
   # Print a visualization of tree (from TOP student).
