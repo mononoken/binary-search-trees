@@ -2,6 +2,8 @@
 
 require_relative './node'
 
+require 'pry-byebug'
+
 # Build a binary search tree from an array.
 class Tree
   attr_reader :array, :root
@@ -55,18 +57,15 @@ class Tree
   end
 
   # Refactor. Remove parent_node references.
-  # Instead of using parent node, check if the pointer's children are equal to the data, not the pointer itself.
   def delete(value, pointer = @root)
+    # binding.pry
     return pointer if pointer.nil?
 
-    # Setting current pointer left/right reference equal here allows us to assign new parent child reference without having a separate parent variable.
     if value < pointer.data
-      # Move pointer left
       pointer.left = delete(value, pointer.left)
     elsif value > pointer.data
       pointer.right = delete(value, pointer.right)
     else
-      # Value is pointer and we need to delete this pointer (while keeping in mind different cases).
       case pointer.childs.count
       when 0
         pointer = nil
@@ -74,8 +73,10 @@ class Tree
         return pointer.right if pointer.left.nil?
         return pointer.left if pointer.right.nil?
       when 2
-        # The parent's child should have its data set to that of the next biggest node.
-        # The next biggest node should be removed.
+        next_biggest_value = find_next_biggest(pointer).data
+        pointer.data = next_biggest_value
+        # DON'T PANIC
+        delete(next_biggest_value, pointer)
       end
     end
     pointer
