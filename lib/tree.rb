@@ -30,7 +30,7 @@ class Tree
     end
   end
 
-  def delete(value, pointer = @root)
+  def delete(value, pointer = root)
     return pointer if pointer.nil?
 
     if value < pointer.data
@@ -63,17 +63,7 @@ class Tree
     end
   end
 
-  def find_parent(value, pointer = @root, parent = nil)
-    return "'#{value}' not found in list." if pointer.nil?
-
-    if value == pointer.data
-      parent
-    else
-      value < pointer.data ? find_parent(value, pointer.left, pointer) : find_parent(value, pointer.right, pointer)
-    end
-  end
-
-  def find_next_biggest(pointer = @root)
+  def find_next_biggest(pointer = root)
     return nil if pointer.right.nil?
 
     pointer = pointer.right
@@ -82,7 +72,7 @@ class Tree
   end
 
   def level_order
-    pointer = @root
+    pointer = root
     queue = []
     queue.push(pointer)
 
@@ -100,7 +90,7 @@ class Tree
     level_order_values
   end
 
-  def level_order_recursive(pointer = @root, queue = [pointer], level_order_values = [], &block)
+  def level_order_recursive(pointer = root, queue = [pointer], level_order_values = [], &block)
     if queue.empty?
       level_order_values
     else
@@ -117,7 +107,7 @@ class Tree
   end
 
   # root left right
-  def preorder(pointer = @root, preorder_list = [], &block)
+  def preorder(pointer = root, preorder_list = [], &block)
     if pointer.nil?
       nil
     else
@@ -132,7 +122,7 @@ class Tree
   end
 
   # left root right
-  def inorder(pointer = @root, inorder_list = [], &block)
+  def inorder(pointer = root, inorder_list = [], &block)
     if pointer.nil?
       nil
     else
@@ -148,7 +138,7 @@ class Tree
   end
 
   # left right root
-  def postorder(pointer = @root, postorder_list = [], &block)
+  def postorder(pointer = root, postorder_list = [], &block)
     if pointer.nil?
       nil
     else
