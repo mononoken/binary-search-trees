@@ -2,8 +2,6 @@
 
 require_relative './node'
 
-require 'pry-byebug'
-
 # Build a binary search tree from an array.
 class Tree
   attr_reader :array, :root
@@ -32,27 +30,27 @@ class Tree
     end
   end
 
-  def delete(value, node = @root, parent_node = nil)
-    if node.data == value
-      case node.childs.count
+  def delete(value, pointer = @root, parent_node = nil)
+    return nil if pointer.nil?
+
+    if pointer.data == value
+      case pointer.childs.count
       when 0
-        parent_node.left = nil if parent_node.left == node
-        parent_node.right = nil if parent_node.right == node
+        parent_node.left = nil if parent_node.left == pointer
+        parent_node.right = nil if parent_node.right == pointer
       when 1
-        parent_node.left = node.childs[0] if parent_node.left == node
-        parent_node.right = node.childs[0] if parent_node.right == node
+        parent_node.left = pointer.childs[0] if parent_node.left == pointer
+        parent_node.right = pointer.childs[0] if parent_node.right == pointer
       when 2
-        next_biggest_node = find_next_biggest(node)
+        next_biggest_node = find_next_biggest(pointer)
         parent_next_biggest_node = find_parent(next_biggest_node.data)
         node.data = next_biggest_node.data
         parent_next_biggest_node.left = nil if parent_next_biggest_node.left == next_biggest_node
         parent_next_biggest_node.right = nil if parent_next_biggest_node.right == next_biggest_node
       end
     else
-      return nil if node.nil?
-
-      delete(value, node.left, node) if value < node.data
-      delete(value, node.right, node) if value > node.data
+      delete(value, pointer.left, pointer) if value < node.data
+      delete(value, pointer.right, pointer) if value > node.data
     end
   end
 
