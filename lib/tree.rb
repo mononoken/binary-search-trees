@@ -31,7 +31,7 @@ class Tree
   end
 
   def delete(value, pointer = @root, parent_node = nil)
-    return nil if pointer.nil?
+    return pointer if pointer.nil?
 
     if pointer.data == value
       case pointer.childs.count
