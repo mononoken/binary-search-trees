@@ -54,6 +54,20 @@ class Tree
     end
   end
 
+  # Refactor. Remove parent_node references.
+  # Instead of using parent node, check if the pointer's children are equal to the data, not the pointer itself.
+  def delete(value, pointer = @root)
+    return pointer if pointer.nil?
+
+    if value < pointer.data
+      # Move pointer left
+    elsif value > pointer.data
+      # Move pointer right
+    else
+      # Value is pointer and we need to delete this pointer (while keeping in mind different cases).
+    end
+  end
+
   def find(value, pointer = root)
     return "'#{value}' not found in list." if pointer.nil?
 
