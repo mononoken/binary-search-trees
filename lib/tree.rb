@@ -76,7 +76,7 @@ class Tree
         next_biggest_value = find_next_biggest(pointer).data
         pointer.data = next_biggest_value
         # DON'T PANIC
-        delete(next_biggest_value, pointer)
+        pointer.right = delete(next_biggest_value, pointer.right)
       end
     end
     pointer
