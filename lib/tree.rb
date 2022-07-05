@@ -11,13 +11,24 @@ class Tree
     @root = build_tree(@array)
   end
 
+  # Refactor
   def build_tree(array)
     return nil if array.empty?
 
-    root = Node.new(array[array.count / 2])
-    root.left = build_tree(array[0...array.count / 2])
-    root.right = build_tree(array[array.count / 2 + 1..array.count])
+    midpoint, left_array, right_array = split_array(array)
+
+    root = Node.new(midpoint)
+    root.left = build_tree(left_array)
+    root.right = build_tree(right_array)
     root
+  end
+
+  def split_array(array)
+    midpoint = array[array.count / 2]
+    left_array = array.partition { |num| num < midpoint }[0]
+    right_array = array.partition { |num| num > midpoint}[0]
+
+    return midpoint, left_array, right_array
   end
 
   def insert(value, pointer = root)
@@ -151,14 +162,14 @@ class Tree
     end
   end
 
-  def find_leafs(node)
-    preorder(node).filter { |node| node.leaf? }
+  def find_leafs(pointer = root)
+    preorder(pointer).filter { |node| node.leaf? }
   end
 
-  def height(node = root)
-    return "'#{node}' not found in list." unless node.instance_of?(Node)
+  def height(pointer = root)
+    return "'#{pointer}' not found in list." unless pointer.instance_of?(Node)
 
-    find_leafs(node).map { |leaf| depth(leaf, node)}.max
+    find_leafs(pointer).map { |leaf| depth(leaf, pointer)}.max
   end
 
   def depth(node, pointer = root, counter = 0)
