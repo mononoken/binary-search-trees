@@ -102,19 +102,18 @@ class Tree
   end
 
   def level_order_recursive(pointer = root, queue = [pointer], level_order_values = [], &block)
-    if queue.empty?
-      level_order_values
-    else
-      pointer = queue.shift
-      block.call(pointer) if block_given?
+    return nil if queue.empty?
       
-      level_order_values.push(pointer.data)
+    pointer = queue.shift
+    block.call(pointer) if block_given?
+    
+    level_order_values.push(pointer.data)
 
-      queue.push(pointer.left) unless pointer.left.nil?
-      queue.push(pointer.right) unless pointer.right.nil?
-      level_order_recursive(pointer, queue, level_order_values, &block)
-      level_order_values
-    end
+    queue.push(pointer.left) unless pointer.left.nil?
+    queue.push(pointer.right) unless pointer.right.nil?
+    level_order_recursive(pointer, queue, level_order_values, &block)
+
+    level_order_values
   end
 
   # root left right
