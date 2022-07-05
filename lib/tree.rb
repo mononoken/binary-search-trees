@@ -82,25 +82,6 @@ class Tree
     pointer
   end
 
-  def level_order
-    pointer = root
-    queue = []
-    queue.push(pointer)
-
-    level_order_values = []
-
-    until queue.empty?
-      pointer = queue.shift
-      level_order_values.push(pointer.data) unless pointer.nil?
-
-      yield pointer if block_given?
-
-      queue.push(pointer.left) unless pointer.left.nil?
-      queue.push(pointer.right) unless pointer.right.nil?
-    end
-    level_order_values
-  end
-
   def level_order(&block)
     queue = [root]
     level_order_values = []
@@ -224,6 +205,7 @@ class Tree
   end
 end
 
+# Test driver script
 puts 'Initialize tree'
 test = Tree.new(Array.new(15) { rand(1..100) })
 test.pretty_print
