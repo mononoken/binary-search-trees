@@ -26,9 +26,9 @@ class Tree
   def split_array(array)
     midpoint = array[array.count / 2]
     left_array = array.partition { |num| num < midpoint }[0]
-    right_array = array.partition { |num| num > midpoint}[0]
+    right_array = array.partition { |num| num > midpoint }[0]
 
-    return midpoint, left_array, right_array
+    [midpoint, left_array, right_array]
   end
 
   def insert(value, pointer = root)
