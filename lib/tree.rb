@@ -100,10 +100,10 @@ class Tree
 
   def level_order_recursive(pointer = root, queue = [pointer], level_order_values = [], &block)
     return nil if queue.empty?
-      
+
     pointer = queue.shift
     block.call(pointer) if block_given?
-    
+
     level_order_values.push(pointer.data)
 
     queue.push(pointer.left) unless pointer.left.nil?
@@ -159,13 +159,13 @@ class Tree
   end
 
   def find_leafs(pointer = root)
-    preorder(pointer).filter { |node| node.leaf? }
+    preorder(pointer).filter(&:leaf?)
   end
 
   def height(pointer = root)
     return "'#{pointer}' not found in list." unless pointer.instance_of?(Node)
 
-    find_leafs(pointer).map { |leaf| depth(leaf, pointer)}.max
+    find_leafs(pointer).map { |leaf| depth(leaf, pointer) }.max
   end
 
   def depth(node, pointer = root, counter = 0)
